@@ -1,0 +1,25 @@
+{
+    "name": "sqlserver-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+        "database.hostname": "localhost",
+        "database.port": "1433",
+        "database.user": "sa",
+        "database.password": "SAPassword!",
+        "database.dbname": "application",
+        "database.server.name": "sqlserver",
+        "table.include.list": "dbo.customers,dbo.orders",
+        "database.history.kafka.bootstrap.servers": "kafka:9092",
+        "database.history.kafka.topic": "schema-changes.sqlserver",
+
+        "include.schema.changes": "true",
+        "decimal.handling.mode": "precise",
+        "snapshot.mode": "initial",
+
+        "tombstones.on.delete": "false",
+        "topic.prefix": "sqlserver",
+        "transforms": "unwrap",
+        "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+        "transforms.unwrap.drop.tombstones": "false"
+    }
+}

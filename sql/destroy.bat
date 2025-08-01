@@ -1,0 +1,1 @@
+sqlcmd -S tcp:localhost,1433 -U sa -P SAPassword! -d master -Q "drop database application"
