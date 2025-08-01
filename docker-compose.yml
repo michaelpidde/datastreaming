@@ -32,6 +32,10 @@ services:
       environment:
         SA_PASSWORD: "SAPassword!"
         ACCEPT_EULA: "Y"
+      volumes:
+        - ./sql/startup/startup.sh:/start.sh # This enables the SQL Server Agent which is required for CDC transactions
+      entrypoint: ["/bin/bash", "/start.sh"]
+      user: root
  
   connect:
     image: debezium/connect:2.7.3.Final

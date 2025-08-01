@@ -16,3 +16,8 @@ This project exists to learn about event streaming - in particular, how to orche
     ```
     This generates a number of files in the `seed` folder and a seed_master.bat file. You do not need to interact with these files directly.
 1. To create the database, run `seed/create.bat`. To tear it down, run `seed/destroy.bat`
+1. Add the Debezium Kafka Connect connector for the SQL Server instance:
+    ```
+    cd connector
+    register.bat
+    ```

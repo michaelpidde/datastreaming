@@ -1,0 +1,6 @@
+* Connector and tasks should have state of RUNNING:
+curl http://localhost:8083/connectors/sqlserver-connector/status
+
+
+* Log into kafka container and validate topics:
+kafka-topics.sh --bootstrap-server localhost:9092 --list
