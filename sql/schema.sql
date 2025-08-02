@@ -34,6 +34,7 @@ if not exists(select * from sys.objects where object_id = object_id(N'.dbo.order
 		id bigint identity(1,1) not null,
 		customerId bigint not null,
 		productId bigint not null,
+		[count] int not null,
 		created datetime not null default getdate(),
 		fulfilled datetime default null,
 		cancelled datetime default null,

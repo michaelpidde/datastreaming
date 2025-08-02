@@ -1,12 +1,13 @@
 import random
 
 inserts = []
-# 3,000,000
+# 500,0000
 print("Generating random order data")
-for i in range(3000000):
+for i in range(5000000):
     customerId = random.randint(1, 1000)
     productId = random.randint(1, 5000)
-    inserts.append(f"({customerId}, {productId}),")
+    productCount = random.randint(1, 20)
+    inserts.append(f"({customerId}, {productId}, {productCount}),")
 
 chunk_size = 1000
 file_max_inserts = 100000
@@ -23,7 +24,7 @@ while i < len(inserts):
             i += chunk_size
             inserts_in_file += len(chunk)
             chunk[-1] = chunk[-1][:-1] # remove trailing comma from last element in chunk
-            file.write("INSERT INTO [order] (customerId, productId) VALUES ")
+            file.write("INSERT INTO [order] (customerId, productId, [count]) VALUES ")
             file.write("".join(chunk))
             file.write(";\n\n")
 

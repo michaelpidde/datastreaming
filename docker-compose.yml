@@ -60,3 +60,11 @@ services:
       - CONNECT_JETTY_HEADER_BUFFER_SIZE=65536
       - CONNECT_JETTY_REQUEST_HEADER_SIZE=65536
       - CONNECT_JETTY_RESPONSE_HEADER_SIZE=65536
+
+  consumer:
+    build:
+      context: ./consumer
+    depends_on:
+      - kafka
+    env_file:
+      - ./consumer/.env
