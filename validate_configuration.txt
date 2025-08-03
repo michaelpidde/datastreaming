@@ -4,3 +4,9 @@ curl http://localhost:8083/connectors/sqlserver-connector/status
 
 * Log into kafka container and validate topics:
 kafka-topics.sh --bootstrap-server localhost:9092 --list
+
+* Check configuration of topics (retention in particular):
+kafka-topics.sh --bootstrap-server kafka:9092 --describe --topic sqlserver.application.dbo.customer
+
+* Check for events:
+kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic sqlserver.application.dbo.customer --from-beginning

@@ -7,31 +7,31 @@ IF "%1" == "" (
 
 IF /I "%1" == "rebuild" (
     echo Rebuilding...
-    docker-compose up --build consumer
+    docker-compose up --build consumer-customer
     goto end
 )
 
 IF /I "%1" == "up" (
     echo Creating container...
-    docker-compose up consumer
+    docker-compose up consumer-customer
     goto end
 )
 
 IF /I "%1" == "down" (
     echo Disposing container...
-    docker-compose down consumer
+    docker-compose down consumer-customer
     goto end
 )
 
 IF /I "%1" == "start" (
     echo Starting container...
-    docker-compose start consumer
+    docker-compose start consumer-customer
     goto end
 )
 
 IF /I "%1" == "stop" (
     echo Stopping container...
-    docker-compose stop consumer
+    docker-compose stop consumer-customer
     goto end
 )
 

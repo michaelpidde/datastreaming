@@ -21,6 +21,14 @@ services:
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
       - ALLOW_PLAINTEXT_LISTENER=yes
+
+  kafka-config:
+    image: bitnami/kafka:3.5
+    depends_on:
+      - kafka
+    volumes:
+      - ./config/topic-wait-config.sh:/init-topics.sh
+    entrypoint: ["/bin/bash", "/init-topics.sh"]
  
   sqlserver:
       image: mcr.microsoft.com/mssql/server:2019-latest
@@ -61,10 +69,13 @@ services:
       - CONNECT_JETTY_REQUEST_HEADER_SIZE=65536
       - CONNECT_JETTY_RESPONSE_HEADER_SIZE=65536
 
-  consumer:
+  consumer-customer:
+    container_name: consumer-customer
     build:
-      context: ./consumer
+      context: ./consumers/customer
     depends_on:
       - kafka
+      - sqlserver
+      - connect
     env_file:
-      - ./consumer/.env
+      - ./consumers/customer/.env

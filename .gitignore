@@ -1,4 +1,5 @@
 sql/seed
 sql/seed_master.bat
-consumer/bin
-consumer/obj
+consumers/**/bin
+consumers/**/obj
+consumers/.idea

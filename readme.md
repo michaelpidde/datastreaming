@@ -22,3 +22,8 @@ This project exists to learn about event streaming - in particular, how to orche
     cd connector
     register.bat
     ```
+1. Start (or rebuild) consumers:
+    ```
+    cd customers\customer
+    run.bat rebuild
+    ```

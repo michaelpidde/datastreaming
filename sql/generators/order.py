@@ -3,7 +3,7 @@ import random
 inserts = []
 # 500,0000
 print("Generating random order data")
-for i in range(5000000):
+for i in range(1000000):
     customerId = random.randint(1, 1000)
     productId = random.randint(1, 5000)
     productCount = random.randint(1, 20)

@@ -51,12 +51,25 @@ if not exists(select * from sys.objects where object_id = object_id(N'.dbo.order
 		customerId bigint not null,
 		productId bigint not null,
 		openOrders int not null,
+		openOrdersInventoryCount int not null,
 		fulfilledOrders int not null,
 		agingDays int not null,
 
         constraint pk_order_rollup_id primary key clustered (id),
 		constraint fk_order_rollup_customerId foreign key (customerId) references dbo.customer(id),
 		constraint fk_order_rollup_productId foreign key (productId) references dbo.product(id)
+	)
+end
+
+if not exists(select * from sys.objects where object_id = object_id(N'.dbo.inventory_rollup') and type = 'U') begin
+	create table inventory_rollup (
+		id bigint identity(1,1) not null,
+		productId bigint not null,
+		openOrdersInventoryCount int not null,
+		totalFulfilledOrdersInventoryCount int not null
+
+		constraint pk_inventory_rollup_id primary key clustered (id),
+		constraint fk_inventory_rollup_productId foreign key (productId) references dbo.product(id)
 	)
 end
 

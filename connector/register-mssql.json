@@ -14,14 +14,14 @@
         "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
         "schema.history.internal.kafka.topic": "schema-changes.sqlserver",
 
-        "include.schema.changes": "true",
+        "include.schema.changes": "false",
+        "include.before.state": "true",
         "decimal.handling.mode": "precise",
         "snapshot.mode": "initial",
 
-        "tombstones.on.delete": "false",
         "topic.prefix": "sqlserver",
-        "transforms": "unwrap",
-        "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
-        "transforms.unwrap.drop.tombstones": "false"
+
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false"
     }
 }
