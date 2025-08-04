@@ -21,6 +21,8 @@ public static class Database
     
     public static void UpdateOrderRollup(string op, long customerId, long productId, int count)
     {
+        // TODO: If customer+product combination does not exist, insert it.
+        
         string query = $"update order_rollup set openOrdersInventoryCount = openOrdersInventoryCount {op} @count, openOrders = openOrders - 1 where customerId = @customerId and productId = @productId";
         using var connection = new SqlConnection(_connection);
         using var command = new SqlCommand(query, connection);
