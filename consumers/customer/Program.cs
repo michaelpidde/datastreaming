@@ -1,9 +1,8 @@
 ﻿using Confluent.Kafka;
-using Handler;
 using Microsoft.Extensions.Configuration;
-using Model;
-using Service;
 using System.Text.Json;
+using Customer;
+using Shared;
 
 var appConfig = new ConfigurationBuilder()
     .AddEnvironmentVariables()
@@ -31,9 +30,6 @@ using var consumer = new ConsumerBuilder<Ignore, string>(consumerConfig).Build()
 DeadLetterQueue.Initialize(eventServer, deadLetterTopic);
 Database.Initialize(appConfig);
 
-consumer.Subscribe(topic);
-
-Console.WriteLine($"Subscribed to topic: {topic}");
 Console.CancelKeyPress += (_, e) =>
 {
     e.Cancel = true;
@@ -46,36 +42,10 @@ var deserializeOptions = new JsonSerializerOptions
     PropertyNameCaseInsensitive = true
 };
 
-try
-{
-    while (true)
-    {
-        var result = consumer.Consume(CancellationToken.None);
-        Console.WriteLine(result.Message.Value);
-
-        try
-        {
-            var message = JsonSerializer.Deserialize<Message<Customer>>(result.Message.Value, deserializeOptions);
-            if (message is not null)
-            {
-                CustomerHandler.HandleChange(message);
-                consumer.Commit(result);
-            }
-            else
-            {
-                throw new Exception("Deserialization of message returned null.");
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error processing message: {e.Message}");
-            Console.WriteLine("Sending to dead letter topic...");
-
-            await DeadLetterQueue.SendAsync(result.Message.Value, e.Message, topic);
-        }
-    }
-}
-catch (OperationCanceledException)
-{
-    Console.WriteLine("Operation canceled.");
-}
+await KafkaMessageProcessor.ProcessLoopAsync<Customer.Customer>(
+    consumer,
+    topic,
+    deserializeOptions,
+    MessageHandler.HandleChange,
+    DeadLetterQueue.SendAsync // optional
+);

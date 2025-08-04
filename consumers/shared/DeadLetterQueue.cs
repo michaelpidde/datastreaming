@@ -1,24 +1,23 @@
-using System.Text.Json;
-using Confluent.Kafka;
+﻿using Confluent.Kafka;
 
-namespace Service;
+namespace Shared;
 
 public static class DeadLetterQueue
 {
     private static IProducer<Null, string>? _producer;
     private static string? _topic;
-
+    
     public static void Initialize(string server, string topic)
     {
         _topic = topic;
         var config = new ProducerConfig { BootstrapServers = server };
         _producer = new ProducerBuilder<Null, string>(config).Build();
     }
-
+    
     public static async Task SendAsync(string message, string error, string originalTopic)
     {
         if (_producer == null || _topic == null) return;
-
+        
         var payload = new Message<Null, string>
         {
             Value = message,

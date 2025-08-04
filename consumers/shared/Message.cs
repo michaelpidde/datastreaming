@@ -1,4 +1,4 @@
-namespace Model;
+namespace Shared;
 
 public class Message<T>
 {

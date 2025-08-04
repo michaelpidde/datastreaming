@@ -2,6 +2,7 @@
 This project exists to learn about event streaming - in particular, how to orchestrate the ingestion of changes against SQL Server tables into an event system like Kafka so they can subsequently be processed by consumer applications.
 
 # Requirements
+- [.NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 - [Python](https://www.python.org/downloads/)
 - [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)

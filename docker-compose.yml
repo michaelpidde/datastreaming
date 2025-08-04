@@ -72,10 +72,23 @@ services:
   consumer-customer:
     container_name: consumer-customer
     build:
-      context: ./consumers/customer
+      context: ./consumers
+      dockerfile: customer/Dockerfile
     depends_on:
       - kafka
       - sqlserver
       - connect
     env_file:
       - ./consumers/customer/.env
+
+  consumer-order:
+    container_name: consumer-order
+    build:
+      context: ./consumers
+      dockerfile: order/Dockerfile
+    depends_on:
+      - kafka
+      - sqlserver
+      - connect
+    env_file:
+      - ./consumers/order/.env

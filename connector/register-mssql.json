@@ -17,7 +17,7 @@
         "include.schema.changes": "false",
         "include.before.state": "true",
         "decimal.handling.mode": "precise",
-        "snapshot.mode": "initial",
+        "snapshot.mode": "schema_only",
 
         "topic.prefix": "sqlserver",
 
