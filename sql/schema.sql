@@ -38,11 +38,14 @@ if not exists(select * from sys.objects where object_id = object_id(N'.dbo.order
 		created datetime not null default getdate(),
 		fulfilled datetime default null,
 		cancelled datetime default null,
+		[rowVersion] rowversion not null,
 
 		constraint pk_order_id primary key clustered (id),
 		constraint fk_order_customerId foreign key (customerId) references dbo.customer(id),
 		constraint fk_order_productId foreign key (productId) references dbo.product(id)
 	)
+
+	create index ix_order_customerproduct on [order](customerId, productId)
 end
 
 if not exists(select * from sys.objects where object_id = object_id(N'.dbo.order_rollup') and type = 'U') begin
@@ -54,11 +57,14 @@ if not exists(select * from sys.objects where object_id = object_id(N'.dbo.order
 		openOrdersInventoryCount int not null,
 		fulfilledOrders int not null,
 		agingDays int not null,
+		[rowVersion] rowversion not null,
 
         constraint pk_order_rollup_id primary key clustered (id),
 		constraint fk_order_rollup_customerId foreign key (customerId) references dbo.customer(id),
 		constraint fk_order_rollup_productId foreign key (productId) references dbo.product(id)
 	)
+
+	create index ix_order_rollup_customerproduct on order_rollup(customerId, productId)
 end
 
 if not exists(select * from sys.objects where object_id = object_id(N'.dbo.inventory_rollup') and type = 'U') begin

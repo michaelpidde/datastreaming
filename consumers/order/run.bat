@@ -7,13 +7,13 @@ IF "%1" == "" (
 
 IF /I "%1" == "rebuild" (
     echo Rebuilding...
-    docker-compose up --build consumer-order
+    docker-compose up --build consumer-order --scale consumer-order=3
     goto end
 )
 
 IF /I "%1" == "up" (
     echo Creating container...
-    docker-compose up consumer-order
+    docker-compose up consumer-order --scale consumer-order=3
     goto end
 )
 

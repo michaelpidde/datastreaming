@@ -28,7 +28,10 @@ create_and_config_topic() {
   --partitions $2 \
   --replication-factor 1 \
   --config retention.ms=$RETENTION_MS
-
+  
+  kafka-topics.sh --bootstrap-server "$BROKER" \
+  --alter --topic $1 --partitions $2
+  
   kafka-configs.sh --bootstrap-server "$BROKER" \
   --entity-type topics --entity-name $1 \
   --alter --add-config retention.ms=$RETENTION_MS
@@ -36,7 +39,7 @@ create_and_config_topic() {
 
 create_and_config_topic "sqlserver.application.dbo.customer" 1
 create_and_config_topic "sqlserver.application.dbo.product" 1
-create_and_config_topic "sqlserver.application.dbo.order" 1
+create_and_config_topic "sqlserver.application.dbo.order" 3
 
 
 

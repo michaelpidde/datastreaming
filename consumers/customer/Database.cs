@@ -21,7 +21,7 @@ public static class Database
 
     public static void CancelCustomerOrders(long customerId)
     {
-        string query = $"update [order] set cancelled = getdate() where customerId = @customerId";
+        string query = $"update [order] set cancelled = getdate() where customerId = @customerId and cancelled is null and fulfilled is null";
         using var connection = new SqlConnection(_connection);
         using var command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@customerId", customerId);
